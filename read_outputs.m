@@ -3,27 +3,24 @@
 
 clear
 clc
-cd("/Users/patrick/Library/CloudStorage/Dropbox/Tomorrow's Cities Risk Work - UCL Team/Chenbo Work/Work with Himanshu")
+cd("/output_files")
 %% read data and extract relevant information
 for policy = 0:5
     fname="Di_p"+num2str(policy)+".xlsx";
     var_name="Di_p"+num2str(policy);
     data.(var_name) = readmatrix(fname);
 end
-data.Di_p0=data.Di_p0(2:end);
-data.Di_p1=data.Di_p1(2:end);
-data.Di_p2=data.Di_p2(2:end);
-data.Di_p3=data.Di_p3(2:end);
-data.Di_p4=data.Di_p4(2:end);
-data.Di_p5=data.Di_p5(2:end);
-
-
+data.Di_p0=data.Di_p0(2:end);data.Di_p1=data.Di_p1(2:end);
+data.Di_p2=data.Di_p2(2:end);data.Di_p3=data.Di_p3(2:end);
+data.Di_p4=data.Di_p4(2:end);data.Di_p5=data.Di_p5(2:end);
 data.delta_all = readmatrix("delta_all.xlsx");
 data.delta_low = readmatrix("delta_low.xlsx");
 data.bcr_all = readmatrix("bcr_all.xlsx");
 data.bcr_low = readmatrix("bcr_low.xlsx");
 
+cd("/DATA/bld_sc")
 bldPort_TV0=readgeotable("bldPort_TV0_siteclasses.shp");
+load poly_TV_0.mat; 
 
 % extract income group information
 idx_low=find(bldPort_TV0.polytype=="lowIncome");
@@ -41,7 +38,6 @@ idx_T_2=find(bldPort_TV0.vulnStrEQ=="BrCfl+LC+LR");
 idx_T_3=find(bldPort_TV0.vulnStrEQ=="BrCri+LC+LR");
 
 %%
-load poly_TV_0.mat; 
 PolyIDLow = []; PolyIDMid = []; PolyIDHigh = [];
 for poly = 1:size(poly_TV_0,1)
     if contains(poly_TV_0(poly).typeSocial,'low') == 1
